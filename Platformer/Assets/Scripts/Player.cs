@@ -15,6 +15,16 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float jumpSpeed = 5f;
 
+    [SerializeField] private float coyoteTime = 0.1f;
+
+    [SerializeField] private float jumpBufferTime = 0.1f;
+
+    [SerializeField] [Range(0.1f,1f)] private float jumpCutMultiplier = .5f;
+
+    float lastGroundedTime;
+
+    float jumpBufferTimer;
+
     [SerializeField] private LayerMask groundLayer;
     InputAction moveAction;
 
@@ -100,15 +110,48 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector2(Mathf.Sign(playerCharacter.linearVelocity.x), 1f);
         }
     }
-    
+
     private void Jump()
     {
+
+        if (jumpAction.WasReleasedThisFrame() && playerCharacter.linearVelocity.y > 0)
+        {
+            playerCharacter.linearVelocity = new Vector2(playerCharacter.linearVelocity.x, playerCharacter.linearVelocity.y * jumpCutMultiplier);
+        }
+
+
+        
         bool isGrounded = playerFeetCollider.IsTouchingLayers(GroundLayer);
 
-        if (jumpPressedThisFrame && isGrounded)
+        if (isGrounded)
         {
-            playerCharacter.linearVelocity = new Vector2(playerCharacter.linearVelocityX, jumpSpeed) ;
+            // remeber a brief window after leaving ground
+            lastGroundedTime = coyoteTime;
         }
+        else
+        {
+            lastGroundedTime -= Time.deltaTime;
+        }
+
+        if (jumpPressedThisFrame)
+        {
+            //remeber a jump was pressed before landing
+            jumpBufferTimer = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferTimer -= Time.deltaTime;
+        }
+
+        if (lastGroundedTime <= 0 || jumpBufferTimer <= 0)
+        {
+            return;
+        }
+
+        playerCharacter.linearVelocity = new Vector2(playerCharacter.linearVelocityX, jumpSpeed);
+
+        lastGroundedTime = 0;
+        jumpBufferTimer = 0;
     }
 
 
