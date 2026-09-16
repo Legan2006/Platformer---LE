@@ -3,7 +3,7 @@
     "name": "CharacterInput",
     "maps": [
         {
-            "name": "PlayerCharacter",
+            "name": "Player",
             "id": "ceef4c63-3535-446a-9820-47346ef786fa",
             "actions": [
                 {
@@ -14,6 +14,16 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "9122ceb7-7c95-4ca6-9aec-8ac747c88aff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
                     "priority": 0
                 }
             ],
@@ -127,6 +137,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "fa9791f1-9057-4813-8288-dd548e158693",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
