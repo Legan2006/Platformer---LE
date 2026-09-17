@@ -19,11 +19,15 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float jumpBufferTime = 0.1f;
 
+    [SerializeField] private float fallGravityMultiplier = 2.0f;
+
     [SerializeField] [Range(0.1f,1f)] private float jumpCutMultiplier = .5f;
 
     float lastGroundedTime;
 
     float jumpBufferTimer;
+
+    float gravityScaleAtStart;
 
     [SerializeField] private LayerMask groundLayer;
     InputAction moveAction;
@@ -55,6 +59,8 @@ public class Player : MonoBehaviour
 
         playerFeetCollider = GetComponent<BoxCollider2D>();
 
+        gravityScaleAtStart = playerCharacter.gravityScale;
+
         playerMap.Enable();
 
     }
@@ -71,8 +77,9 @@ public class Player : MonoBehaviour
         MoveInput = moveAction.ReadValue<Vector2>();
 
         Run();
-        FlipSprite();
         Jump();
+        BetterGravity();
+        FlipSprite();
     }
 
     private void Run()
@@ -153,6 +160,28 @@ public class Player : MonoBehaviour
         lastGroundedTime = 0;
         jumpBufferTimer = 0;
     }
+
+
+    private void BetterGravity()
+    {
+
+        //use stronger gravity when falling, then cap fall speed
+        float gravityMultiplier = playerCharacter.linearVelocity.y < 0 ? fallGravityMultiplier:1f;
+        playerCharacter.gravityScale = gravityScaleAtStart * gravityMultiplier;
+
+        if (playerCharacter.linearVelocity.y < -jumpSpeed * fallGravityMultiplier)
+        {
+            playerCharacter.linearVelocity = new Vector2(playerCharacter.linearVelocity.x, -jumpSpeed * fallGravityMultiplier);
+
+        }
+
+
+
+    }
+
+
+
+
 
 
 

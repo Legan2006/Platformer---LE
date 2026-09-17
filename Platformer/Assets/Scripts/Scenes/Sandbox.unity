@@ -230,6 +230,10 @@ MonoBehaviour:
   runDeceleration: 40
   inputActions: {fileID: -944628639613478452, guid: 4a479d6b6f1e69e418d164f9ecf1e6c0, type: 3}
   jumpSpeed: 5
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
+  fallGravityMultiplier: 2
+  jumpCutMultiplier: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -636,7 +640,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1473372861
 MonoBehaviour:
@@ -655,6 +659,10 @@ MonoBehaviour:
   runDeceleration: 40
   inputActions: {fileID: -944628639613478452, guid: 4a479d6b6f1e69e418d164f9ecf1e6c0, type: 3}
   jumpSpeed: 5
+  coyoteTime: 1
+  jumpBufferTime: 0.1
+  fallGravityMultiplier: 0
+  jumpCutMultiplier: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
