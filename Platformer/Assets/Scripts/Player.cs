@@ -23,6 +23,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] [Range(0.1f,1f)] private float jumpCutMultiplier = .5f;
 
+    [SerializeField] private float climbSpeed = 5f;
+
+    [SerializeField] private float ladderJumpTime = .15f;
+
+    float jumpedOffLadderTimer;
+
     float lastGroundedTime;
 
     float jumpBufferTimer;
@@ -36,6 +42,8 @@ public class Player : MonoBehaviour
 
     public bool jumpPressedThisFrame => jumpAction != null && jumpAction.WasPressedThisFrame();
     public LayerMask GroundLayer => groundLayer.value != 0 ? groundLayer : LayerMask.GetMask("Ground");
+
+    LayerMask climbingLayer;
     public Vector2 MoveInput { get; private set; }
     
     Rigidbody2D playerCharacter;
@@ -43,6 +51,8 @@ public class Player : MonoBehaviour
     Animator playerAnimator;
 
     BoxCollider2D playerFeetCollider;
+
+    CapsuleCollider2D playerBodyCollider;
 
     // Initializes its contents before the game begins
     void Awake()
@@ -59,7 +69,11 @@ public class Player : MonoBehaviour
 
         playerFeetCollider = GetComponent<BoxCollider2D>();
 
+        playerBodyCollider = GetComponent<CapsuleCollider2D>();
+
         gravityScaleAtStart = playerCharacter.gravityScale;
+
+        climbingLayer = LayerMask.GetMask("Climbing");
 
         playerMap.Enable();
 
@@ -80,6 +94,7 @@ public class Player : MonoBehaviour
         Jump();
         BetterGravity();
         FlipSprite();
+        Climb();
     }
 
     private void Run()
@@ -128,7 +143,7 @@ public class Player : MonoBehaviour
 
 
         
-        bool isGrounded = playerFeetCollider.IsTouchingLayers(GroundLayer);
+        bool isGrounded = playerFeetCollider.IsTouchingLayers(GroundLayer) || playerFeetCollider.IsTouchingLayers(climbingLayer);
 
         if (isGrounded)
         {
@@ -180,7 +195,33 @@ public class Player : MonoBehaviour
     }
 
 
+    private void Climb()
+    {
+        jumpedOffLadderTimer -= Time.deltaTime;
 
+        if (jumpedOffLadderTimer > 0 || !playerBodyCollider.IsTouchingLayers(climbingLayer))
+        {
+            playerAnimator.SetBool("climb", false);
+            
+            playerCharacter.gravityScale = gravityScaleAtStart;
+
+            return;
+        }
+
+        float vMovement = MoveInput.y;
+
+        Vector2 climbingVelocity = new Vector2(MoveInput.x * runSpeed, vMovement * climbSpeed);
+
+        playerCharacter.linearVelocity = climbingVelocity;
+
+        playerCharacter.gravityScale = 0f;
+
+        bool vSpeed = Mathf.Abs(playerCharacter.linearVelocity.y) > Mathf.Epsilon;
+
+        playerAnimator.SetBool("climb", true);
+
+
+    }
 
 
 
