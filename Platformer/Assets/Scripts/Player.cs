@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     float gravityScaleAtStart;
 
+    float attackTimer;
+
     [SerializeField] private LayerMask groundLayer;
     InputAction moveAction;
 
@@ -95,6 +97,7 @@ public class Player : MonoBehaviour
         BetterGravity();
         FlipSprite();
         Climb();
+        Attack();
     }
 
     private void Run()
@@ -222,6 +225,25 @@ public class Player : MonoBehaviour
 
 
     }
+
+
+    private void Attack()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            playerAnimator.SetBool("Attack", true);
+
+            attackTimer -= Time.deltaTime;
+            return;
+        }
+
+        if (playerAnimator.GetBool("Attack") && attackTimer <= 0)
+        {
+
+        }
+
+    }
+
 
 
 
