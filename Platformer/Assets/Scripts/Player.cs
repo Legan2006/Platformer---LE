@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -229,20 +230,22 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
+        Debug.Log(attackTimer);
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             playerAnimator.SetBool("Attack", true);
 
-            attackTimer -= Time.deltaTime;
-            return;
-        }
-
-        if (playerAnimator.GetBool("Attack") && attackTimer <= 0)
-        {
 
         }
+        //if ()
+      //  {
+      //      playerAnimator.SetBool("Attack", false);
+      //  }
 
     }
+
+
+    
 
 
 
