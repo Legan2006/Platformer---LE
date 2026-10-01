@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 38558034}
   - component: {fileID: 38558036}
   - component: {fileID: 38558035}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,8 +244,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 77052887
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -6615,7 +6615,7 @@ GameObject:
   - component: {fileID: 1365152190}
   - component: {fileID: 1365152192}
   - component: {fileID: 1365152191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6682,8 +6682,8 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1858416159
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
@@ -6872,7 +6872,7 @@ GameObject:
   - component: {fileID: 1532519136}
   - component: {fileID: 1532519138}
   - component: {fileID: 1532519137}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Climb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
