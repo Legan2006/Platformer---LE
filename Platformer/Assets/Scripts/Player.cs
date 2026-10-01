@@ -57,6 +57,10 @@ public class Player : MonoBehaviour
 
     CapsuleCollider2D playerBodyCollider;
 
+    bool isAlive = true;
+
+    float pHP = 3f;
+
     // Initializes its contents before the game begins
     void Awake()
     {
@@ -91,14 +95,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveInput = moveAction.ReadValue<Vector2>();
+        if (!isAlive)
+        {
+            return;
+        }
+            MoveInput = moveAction.ReadValue<Vector2>();
 
-        Run();
-        Jump();
-        BetterGravity();
-        FlipSprite();
-        Climb();
-        Attack();
+            Run();
+            Jump();
+            BetterGravity();
+            FlipSprite();
+            Climb();
+            Attack();
+        
     }
 
     private void Run()
@@ -246,7 +255,14 @@ public class Player : MonoBehaviour
 
 
     
-
+    private void Health()
+    {
+        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        {
+            pHP -= 1;
+            playerAnimator.SetTrigger("die");
+        }
+    }
 
 
 
