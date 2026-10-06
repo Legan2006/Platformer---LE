@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     float attackTimer;
 
+    Vector2 direction;
+
     [SerializeField] private LayerMask groundLayer;
     InputAction moveAction;
 
@@ -145,7 +147,8 @@ public class Player : MonoBehaviour
 
         if (hMovement)
         {
-            transform.localScale = new Vector2(Mathf.Sign(playerCharacter.linearVelocity.x), 1f);
+            direction = new Vector2(Mathf.Sign(playerCharacter.linearVelocity.x), 1f);
+            transform.localScale = direction;
         }
     }
 
@@ -242,16 +245,32 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
+
+        attackTimer -= Time.deltaTime;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Instantiate(projectilePrefab , LaunchDirection.position, transform.rotation);
-
-
+            if (attackTimer <= 0)
+            {
+                if (IsFacingRight())
+                {
+                    Instantiate(projectilePrefab, LaunchDirection.position, transform.rotation);
+                    attackTimer = 1f;
+                }
+                else
+                {
+                    Instantiate(projectilePrefab, LaunchDirection.position, Quaternion.Euler(0, 180, 0));
+                    attackTimer = 1f;
+                }
+            }
         }
+    }
+    private bool IsFacingRight()
+    {
+        return transform.localScale.x > 0;
     }
 
 
-    
     private void Death()
     {
         if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")) || playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))

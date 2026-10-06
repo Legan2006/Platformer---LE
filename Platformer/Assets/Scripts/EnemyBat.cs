@@ -28,12 +28,12 @@ public class EnemyBat : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, flightSpeed * Time.deltaTime);
         if (IsFacingRight())
         {
-            Debug.Log("right");
+           // Debug.Log("right");
 
         }
         else
         {
-            Debug.Log("left");
+           // Debug.Log("left");
         }
         FlipSprite();
     }

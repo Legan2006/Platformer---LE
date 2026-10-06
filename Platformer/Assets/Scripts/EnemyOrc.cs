@@ -47,7 +47,7 @@ public class EnemyOrc : MonoBehaviour
 
     private void EnemyDestruction()
     {
-        if (orcBody.IsTouchingLayers(LayerMask.GetMask("Projectiles")))
+        if (enemyOrc.IsTouchingLayers(LayerMask.GetMask("Projectiles")))
         {
             Destroy(gameObject);
         }
