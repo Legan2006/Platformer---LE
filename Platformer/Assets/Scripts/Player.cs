@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float climbSpeed = 5f;
 
-    [SerializeField] private float ladderJumpTime = .15f;
+    [SerializeField] private Vector2 deathSeq;
 
     float jumpedOffLadderTimer;
 
@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
 
     public bool jumpPressedThisFrame => jumpAction != null && jumpAction.WasPressedThisFrame();
     public LayerMask GroundLayer => groundLayer.value != 0 ? groundLayer : LayerMask.GetMask("Ground");
+
+    public Projectiles projectilePrefab;
+    public Transform LaunchDirection;
 
     LayerMask climbingLayer;
     public Vector2 MoveInput { get; private set; }
@@ -100,7 +103,7 @@ public class Player : MonoBehaviour
             return;
         }
             MoveInput = moveAction.ReadValue<Vector2>();
-
+            Death();
             Run();
             Jump();
             BetterGravity();
@@ -239,28 +242,23 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log(attackTimer);
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            playerAnimator.SetBool("Attack", true);
+            Instantiate(projectilePrefab , LaunchDirection.position, transform.rotation);
 
 
         }
-        //if ()
-      //  {
-      //      playerAnimator.SetBool("Attack", false);
-      //  }
-
     }
 
 
     
-    private void Health()
+    private void Death()
     {
-        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")) || playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
         {
-            pHP -= 1;
             playerAnimator.SetTrigger("die");
+            isAlive = false;
+            playerCharacter.linearVelocity = deathSeq;
         }
     }
 

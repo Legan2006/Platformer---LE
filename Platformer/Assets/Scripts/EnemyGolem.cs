@@ -2,15 +2,29 @@ using UnityEngine;
 
 public class EnemyGolem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    Rigidbody2D golemBox;
     void Start()
     {
-        
+        golemBox = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        EnemyDestruction();
     }
+
+    private void EnemyDestruction()
+    {
+        if (golemBox.IsTouchingLayers(LayerMask.GetMask("Projectiles")))
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+
+
 }

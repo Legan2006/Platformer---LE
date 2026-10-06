@@ -6,6 +6,8 @@ public class EnemyOrc : MonoBehaviour
 
     Rigidbody2D enemyOrc;
 
+    CapsuleCollider2D orcBody;
+
     [SerializeField] float walkSpeed;
 
     [SerializeField] float runSpeed;
@@ -14,11 +16,14 @@ public class EnemyOrc : MonoBehaviour
     void Start()
     {
         enemyOrc = GetComponent<Rigidbody2D>();
+
+        orcBody = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        EnemyDestruction();
         if (IsFacingRight())
         {
             enemyOrc.linearVelocity = new Vector2(walkSpeed, 0);
@@ -39,5 +44,16 @@ public class EnemyOrc : MonoBehaviour
     {
         return transform.localScale.x > 0;
     }
+
+    private void EnemyDestruction()
+    {
+        if (orcBody.IsTouchingLayers(LayerMask.GetMask("Projectiles")))
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+
 
 }

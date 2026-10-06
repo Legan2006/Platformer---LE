@@ -24,6 +24,7 @@ public class EnemyBat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        EnemyDestruction();
         transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, flightSpeed * Time.deltaTime);
         if (IsFacingRight())
         {
@@ -46,11 +47,20 @@ public class EnemyBat : MonoBehaviour
 
     }
 
+    private void EnemyDestruction()
+    {
+        if (batBox.IsTouchingLayers(LayerMask.GetMask("Projectiles"))){
+            Destroy(gameObject);
+        }
+
+    }
+
+
+
     private bool IsFacingRight()
     {
         return transform.localScale.x > 0;
     }
-
 
 
 }

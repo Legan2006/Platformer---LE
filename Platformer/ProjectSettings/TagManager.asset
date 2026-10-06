@@ -17,7 +17,7 @@ TagManager:
   - Climbing
   - Enemies
   - Hazards
-  - 
+  - Projectiles
   - 
   - 
   - 
@@ -41,11 +41,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Foreground
-    uniqueID: 77052887
-    locked: 0
   - name: Background
     uniqueID: 2436551137
+    locked: 0
+  - name: Foreground
+    uniqueID: 77052887
     locked: 0
   - name: Climbing
     uniqueID: 2046424151
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Enemies
     uniqueID: 1811347027
+    locked: 0
+  - name: Projectiles
+    uniqueID: 187506033
     locked: 0
   - name: PlayerCharacter
     uniqueID: 330321479
