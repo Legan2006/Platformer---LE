@@ -227,6 +227,8 @@ public class Player : MonoBehaviour
             return;
         }
 
+        Debug.Log("CLIMB IS WORKING");
+
         float vMovement = MoveInput.y;
 
         Vector2 climbingVelocity = new Vector2(MoveInput.x * runSpeed, vMovement * climbSpeed);
@@ -273,7 +275,7 @@ public class Player : MonoBehaviour
 
     private void Death()
     {
-        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")) || playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
+        if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")) || playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")) || playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")) || playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
         {
             playerAnimator.SetTrigger("die");
             isAlive = false;
